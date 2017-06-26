@@ -20,6 +20,13 @@ var storySchema = new mongoose.Schema({
 
 var Story = mongoose.model("Story", storySchema);
 
+var stories = [
+        {title: "Story Session I", youtubeID: "IjFRdBfEj1I"},
+        {title: "Story Session VI", youtubeID: "SUGgKuO6wpM"},
+        {title: "Story Session VII", youtubeID: "lefmsKYasxA"},
+        {title: "Story Session IIX", youtubeID: "SUGgKuO6wpM"}
+    ];
+
 // RESTful ROUTES
 
 // Landing Page
@@ -30,13 +37,6 @@ app.get("/", function(req, res){
 
 // INDEX ROUTE
 app.get("/stories", function(req, res){
-    var stories = [
-        {title: "Story Session I", youtubeID: "IjFRdBfEj1I"},
-        {title: "Story Session VI", youtubeID: "SUGgKuO6wpM"},
-        {title: "Story Session VII", youtubeID: "lefmsKYasxA"},
-        {title: "Story Session IIX", youtubeID: "SUGgKuO6wpM"}
-    ];
-    
    res.render("stories", {stories: stories}) ;
 });
 
@@ -49,13 +49,16 @@ app.post("/stories", function(req, res){
        youtubeID: youtubeID
    };
    
-   Story.create(newStory, function(err, newlyCreated){
-       if(err) {
-           console.log(err);
-       } else {
-           res.redirect("/stories");
-       }
-   });
+   stories.push(newStory);
+   res.redirect("/stories");
+   
+//   Story.create(newStory, function(err, newlyCreated){
+//       if(err) {
+//           console.log(err);
+//       } else {
+//           res.redirect("/stories");
+//       }
+//   });
 });
 
 

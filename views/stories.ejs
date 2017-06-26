@@ -1,8 +1,29 @@
 <% include partials/header %>
 
-<h1>Their Story</h1>
-
-<p>Lorem ipsum</p>
+    <div class="container">
+        <header class="jumbotron">
+            <div class="container">
+                <h1>Their Stories</h1>
+                <p>A collections of Ellis family stories and conversations</p>
+                <p>
+                    <a class="btn btn-primary btn-large" href="/stories/new">Add New Story</a>
+                </p>
+            </div>
+        </header>
+    
+        <ul>
+            <% stories.forEach(function(story) { %>
+                <li>
+                    <h4><%= story.title %></h4>
+                    <iframe src="https://youtube.com/embed/<%= story.youtubeID %>" 
+                        width="560" height="315" frameborder="0" allowfullscreen>
+                    </iframe>
+                    <hr />
+                </li>
+            <% }); %>
+        </ul>
+    
+    </div>
 
 <% include partials/footer %>
 

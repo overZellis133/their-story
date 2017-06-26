@@ -1,0 +1,12 @@
+ul {
+    list-style: none;
+}
+
+h1 {
+    text-align: center;
+}
+
+.form-style {
+    width: 30%; 
+    margin: 25px auto;
+}

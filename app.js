@@ -21,10 +21,11 @@ var storySchema = new mongoose.Schema({
 var Story = mongoose.model("Story", storySchema);
 
 var stories = [
-        {title: "Story Session I", youtubeID: "IjFRdBfEj1I"},
+        {title: "Learning to Ski & a Night in Kentucky", youtubeID: "IjFRdBfEj1I"},
         {title: "Story Session VI", youtubeID: "SUGgKuO6wpM"},
         {title: "Story Session VII", youtubeID: "lefmsKYasxA"},
-        {title: "Story Session IIX", youtubeID: "SUGgKuO6wpM"}
+        {title: "Story Session IIX", youtubeID: "ayZaTx01Puc"},
+        {title: "On Fear", youtubeID: "uUlppt-q7XE"}
     ];
 
 // RESTful ROUTES

@@ -21,7 +21,7 @@ var storySchema = new mongoose.Schema({
 var Story = mongoose.model("Story", storySchema);
 
 var stories = [
-        {title: "Learning to Ski & a Night in Kentucky", youtubeID: "IjFRdBfEj1I"},
+        {title: "Learning to Ski & A Night in Kentucky", youtubeID: "IjFRdBfEj1I"},
         {title: "Story Session VI", youtubeID: "SUGgKuO6wpM"},
         {title: "Story Session VII", youtubeID: "lefmsKYasxA"},
         {title: "Story Session IIX", youtubeID: "ayZaTx01Puc"},

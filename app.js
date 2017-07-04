@@ -25,7 +25,10 @@ var stories = [
         {title: "Story Session VI", youtubeID: "SUGgKuO6wpM"},
         {title: "Story Session VII", youtubeID: "lefmsKYasxA"},
         {title: "Story Session IIX", youtubeID: "ayZaTx01Puc"},
-        {title: "On Fear", youtubeID: "uUlppt-q7XE"}
+        {title: "Story Session IX", youtubeID: "IvpvAr7bUBM"},
+        {title: "On Fear", youtubeID: "uUlppt-q7XE"},
+        {title: "Proudest Moments", youtubeID: "MPBsgvMGE-Q"},
+        {title: "On Education", youtubeID: "Vj6P46h-l44"}
     ];
 
 // RESTful ROUTES

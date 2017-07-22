@@ -5,7 +5,7 @@ var methodOverride       = require("method-override"),
     app                  = express();
 
 // APP CONFIG
-// mongoose.connect("mongodb://localhost/their_story");
+mongoose.connect("mongodb://localhost/their_story");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -20,31 +20,26 @@ var storySchema = new mongoose.Schema({
 
 var Story = mongoose.model("Story", storySchema);
 
-var stories = [
-        {title: "Learning to Ski & A Night in Kentucky", youtubeID: "IjFRdBfEj1I"},
-        {title: "Story Session VI", youtubeID: "SUGgKuO6wpM"},
-        {title: "Story Session VII", youtubeID: "lefmsKYasxA"},
-        {title: "Story Session IIX", youtubeID: "ayZaTx01Puc"},
-        {title: "Story Session IX", youtubeID: "IvpvAr7bUBM"},
-        {title: "On Fear", youtubeID: "uUlppt-q7XE"},
-        {title: "Proudest Moments", youtubeID: "MPBsgvMGE-Q"},
-        {title: "On Education", youtubeID: "Vj6P46h-l44"}
-    ];
-
-// RESTful ROUTES
-
 // Landing Page
 app.get("/", function(req, res){
-    
     res.render("landing");
 });
 
-// INDEX ROUTE
+// RESTful ROUTES
+
+// INDEX ROUTE - show all stories
 app.get("/stories", function(req, res){
-   res.render("stories", {stories: stories}) ;
+    // Get all the stories from DB
+    Story.find({}, function(err, allStories){
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("stories", {stories: allStories});
+        }
+    });
 });
 
-// CREATE ROUTE
+// CREATE ROUTE - add new story
 app.post("/stories", function(req, res){
    var title = req.body.title;
    var youtubeID = req.body.youtubeID;
@@ -53,20 +48,19 @@ app.post("/stories", function(req, res){
        youtubeID: youtubeID
    };
    
-   stories.push(newStory);
-   res.redirect("/stories");
-   
-//   Story.create(newStory, function(err, newlyCreated){
-//       if(err) {
-//           console.log(err);
-//       } else {
-//           res.redirect("/stories");
-//       }
-//   });
+  Story.create(newStory, function(err, newlyCreated){
+      if (err) {
+          console.log(err);
+      } else {
+          console.log("CREATED NEW STORY");
+          console.log(newlyCreated);
+          res.redirect("/stories");
+      }
+  });
 });
 
 
-// NEW ROUTE
+// NEW ROUTE - show form to create new story
 app.get("/stories/new", function(req, res){
    res.render("new");
 });

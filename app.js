@@ -5,7 +5,8 @@ var methodOverride       = require("method-override"),
     app                  = express();
 
 // APP CONFIG
-mongoose.connect("mongodb://localhost/their_story");
+// mongoose.connect("mongodb://localhost/their_story");
+mongoose.connect("mongodb://overZellis:h2iCyYECAmzvqKYmwwsBGfxP@ds111123.mlab.com:11123/their_story");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -19,6 +20,50 @@ var storySchema = new mongoose.Schema({
 });
 
 var Story = mongoose.model("Story", storySchema);
+
+// var stories = [
+//     // { "title" : "Learning to Ski & A Night in Kentucky", "youtubeID" : "IjFRdBfEj1I", "__v" : 0 }
+//     { "title" : "Story Session VI",
+//     "youtubeID" : "SUGgKuO6wpM"
+//     },
+//     { "title" : "Story Session VII", 
+//     "youtubeID" : "lefmsKYasxA"
+//     },
+//     { "title" : "Story Session IX", 
+//     "youtubeID" : "IvpvAr7bUBM"
+//     },
+//     { "title" : "Story Session IIX", 
+//     "youtubeID" : "ayZaTx01Puc"
+//     },
+//     { "title" : "On Fear", 
+//     "youtubeID" : "uUlppt-q7XE"
+//     },
+//     { "title" : "On Education", 
+//     "youtubeID" : "Vj6P46h-l44"
+//     },
+//     { "title" : "Proudest Moments", 
+//     "youtubeID" : "MPBsgvMGE-Q"
+//     },
+//     { "title" : "What People Would Be Surprised to Know About Mom", 
+//     "youtubeID" : "CS84dCI20ME"
+//     },
+//     { "title" : "What Would Surprise People About Dad", 
+//     "youtubeID" : "g-qLbTsNAiA",
+//     "description": "This is a description"
+//     }
+// ];
+
+// Story.create(
+//     stories,
+//     function(err, story) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             console.log("CREATED NEW STORY");
+//             console.log(story);
+//         }
+//     }
+// );
 
 // Landing Page
 app.get("/", function(req, res){
@@ -34,7 +79,7 @@ app.get("/stories", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            res.render("stories", {stories: allStories});
+            res.render("index", {stories: allStories});
         }
     });
 });
@@ -65,6 +110,18 @@ app.get("/stories/new", function(req, res){
    res.render("new");
 });
 
+
+// SHOW ROUTE - shows more info about one story
+app.get("/stories/:id", function(req, res){
+    // find story with provided ID
+    Story.findById(req.params.id, function(err, foundStory){
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("show", {story: foundStory});
+        }
+    });
+});
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Their Story app has started");

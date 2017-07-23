@@ -6,7 +6,8 @@ var methodOverride       = require("method-override"),
 
 // APP CONFIG
 // mongoose.connect("mongodb://localhost/their_story");
-mongoose.connect("mongodb://overZellis:h2iCyYECAmzvqKYmwwsBGfxP@ds111123.mlab.com:11123/their_story");
+mongoose.connect(process.env.DATABASEURL);
+// mongoose.connect("mongodb://overZellis:h2iCyYECAmzvqKYmwwsBGfxP@ds111123.mlab.com:11123/their_story");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));

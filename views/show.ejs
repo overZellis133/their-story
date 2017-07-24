@@ -1,2 +1,11 @@
-<h1>this is the show template</h1>
-<h2><%= story.title %></h2>
+<% include partials/header %>
+
+<h1><%= story.title %></h1>
+
+<iframe src="https://youtube.com/embed/<%= story.youtubeID %>" 
+    width="560" height="315" frameborder="0" allowfullscreen>
+</iframe>
+
+<p><%= story.description %></p>
+
+<% include partials/footer %>

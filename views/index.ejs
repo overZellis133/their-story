@@ -14,7 +14,9 @@
         <ul>
             <% stories.forEach(function(story) { %>
                 <li>
-                    <h4><%= story.title %></h4>
+                    <h4>
+                        <a href="/stories/<%= story._id %>"><%= story.title %></a>
+                    </h4>
                     <iframe src="https://youtube.com/embed/<%= story.youtubeID %>" 
                         width="560" height="315" frameborder="0" allowfullscreen>
                     </iframe>

@@ -89,9 +89,11 @@ app.get("/stories", function(req, res){
 app.post("/stories", function(req, res){
    var title = req.body.title;
    var youtubeID = req.body.youtubeID;
+   var description = req.body.description;
    var newStory = {
        title: title,
-       youtubeID: youtubeID
+       youtubeID: youtubeID,
+       description: description
    };
    
   Story.create(newStory, function(err, newlyCreated){

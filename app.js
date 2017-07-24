@@ -2,7 +2,11 @@ var methodOverride       = require("method-override"),
     bodyParser           = require("body-parser"),
     mongoose             = require("mongoose"),
     express              = require("express"),
-    app                  = express();
+    app                  = express(),
+    Story                = require("./models/story"),
+    Comment              = require("./models/comment"),
+    User                 = require("./models/user"),
+    seedDB               = require("./seeds");
 
 // APP CONFIG
 var url = process.env.DATABASEURL || "mongodb://localhost/their_story"
@@ -12,59 +16,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
-
-// MONGOOSE/MODEL CONFIG
-var storySchema = new mongoose.Schema({
-   title: String,
-   youtubeID: String,
-   description: String
-});
-
-var Story = mongoose.model("Story", storySchema);
-
-// var stories = [
-//     // { "title" : "Learning to Ski & A Night in Kentucky", "youtubeID" : "IjFRdBfEj1I", "__v" : 0 }
-//     { "title" : "Story Session VI",
-//     "youtubeID" : "SUGgKuO6wpM"
-//     },
-//     { "title" : "Story Session VII", 
-//     "youtubeID" : "lefmsKYasxA"
-//     },
-//     { "title" : "Story Session IX", 
-//     "youtubeID" : "IvpvAr7bUBM"
-//     },
-//     { "title" : "Story Session IIX", 
-//     "youtubeID" : "ayZaTx01Puc"
-//     },
-//     { "title" : "On Fear", 
-//     "youtubeID" : "uUlppt-q7XE"
-//     },
-//     { "title" : "On Education", 
-//     "youtubeID" : "Vj6P46h-l44"
-//     },
-//     { "title" : "Proudest Moments", 
-//     "youtubeID" : "MPBsgvMGE-Q"
-//     },
-//     { "title" : "What People Would Be Surprised to Know About Mom", 
-//     "youtubeID" : "CS84dCI20ME"
-//     },
-//     { "title" : "What Would Surprise People About Dad", 
-//     "youtubeID" : "g-qLbTsNAiA",
-//     "description": "This is a description"
-//     }
-// ];
-
-// Story.create(
-//     stories,
-//     function(err, story) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log("CREATED NEW STORY");
-//             console.log(story);
-//         }
-//     }
-// );
+seedDB();
 
 // Landing Page
 app.get("/", function(req, res){
@@ -117,12 +69,15 @@ app.get("/stories/new", function(req, res){
 // SHOW ROUTE - shows more info about one story
 app.get("/stories/:id", function(req, res){
     // find story with provided ID
-    Story.findById(req.params.id, function(err, foundStory){
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("show", {story: foundStory});
-        }
+    Story.findById(req.params.id)
+        .populate("comments")
+            .exec(function(err, foundStory){
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(foundStory);
+                    res.render("show", {story: foundStory});
+                }
     });
 });
 

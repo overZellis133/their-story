@@ -16,7 +16,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
-seedDB();
+// seedDB();
 
 // Landing Page
 app.get("/", function(req, res){
@@ -32,7 +32,7 @@ app.get("/stories", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            res.render("index", {stories: allStories});
+            res.render("stories/index", {stories: allStories});
         }
     });
 });
@@ -62,7 +62,7 @@ app.post("/stories", function(req, res){
 
 // NEW ROUTE - show form to create new story
 app.get("/stories/new", function(req, res){
-   res.render("new");
+   res.render("stories/new");
 });
 
 
@@ -76,8 +76,44 @@ app.get("/stories/:id", function(req, res){
                     console.log(err);
                 } else {
                     console.log(foundStory);
-                    res.render("show", {story: foundStory});
+                    res.render("stories/show", {story: foundStory});
                 }
+    });
+});
+
+// =============
+// COMMENTS ROUTES
+// =============
+
+app.get("/stories/:id/comments/new", function(req, res){
+    // find story by id
+    Story.findById(req.params.id, function(err, story){
+       if (err) {
+           console.log(err);
+       } else {
+           res.render("comments/new", {story: story});
+       }
+    });
+});
+
+app.post("/stories/:id/comments", function(req, res){
+    // find story by id
+    Story.findById(req.params.id, function(err, story){
+       if (err) {
+           console.log(err);
+           res.redirect("/stories");
+       } else {
+           // create new comment
+           Comment.create(req.body.comment, function(err, comment){
+              if (err) {
+                  console.log(err);
+              } else {
+                  story.comments.push(comment);
+                  story.save();
+                  res.redirect("/stories/" + req.params.id);
+              }
+           });
+       }
     });
 });
 

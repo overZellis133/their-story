@@ -57,32 +57,32 @@ var stories = [
 
 function seedDB(){
     Story.remove({}, function(err){
-       if (err) {
-           console.log(err);
-       }
-       console.log("REMOVED STORIES!");
+      if (err) {
+          console.log(err);
+      }
+      console.log("REMOVED STORIES!");
     });
     // add a some stories
     stories.forEach(function(seed){
         Story.create(seed, function(err, story){
-           if (err) {
-               console.log(err);
-           } else {
-               console.log("ADDED A STORY");
-               Comment.create(
-                   {
-                       text: "This is a comment",
-                       author: "Homer"
-                   }, function(err, comment){
-                       if (err) {
-                           console.log(err);
-                       } else {
-                           story.comments.push(comment);
-                           story.save();
-                           console.log("Created new comment");
-                       }
-                   });
-           }
+          if (err) {
+              console.log(err);
+          } else {
+              console.log("ADDED A STORY");
+              Comment.create(
+                  {
+                      text: "This is a comment",
+                      author: "Homer"
+                  }, function(err, comment){
+                      if (err) {
+                          console.log(err);
+                      } else {
+                          story.comments.push(comment);
+                          story.save();
+                          console.log("Created new comment");
+                      }
+                  });
+          }
         });
     });
     // add some comments

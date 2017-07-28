@@ -15,7 +15,7 @@ router.get("/", function(req, res){
 });
 
 // CREATE ROUTE - add new story
-router.post("/", function(req, res){
+router.post("/", isLoggedIn, function(req, res){
    var title = req.body.title;
    var youtubeID = req.body.youtubeID;
    var description = req.body.description;
@@ -29,8 +29,9 @@ router.post("/", function(req, res){
       if (err) {
           console.log(err);
       } else {
-          console.log("CREATED NEW STORY");
-          console.log(newlyCreated);
+          newlyCreated.author.id = req.user._id;
+          newlyCreated.author.username = req.user.username;
+          newlyCreated.save();
           res.redirect("/stories");
       }
   });
@@ -38,7 +39,7 @@ router.post("/", function(req, res){
 
 
 // NEW ROUTE - show form to create new story
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res){
    res.render("stories/new");
 });
 
@@ -57,5 +58,13 @@ router.get("/:id", function(req, res){
                 }
     });
 });
+
+// middleware
+function isLoggedIn(req, res, next){
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
 
 module.exports = router;

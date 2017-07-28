@@ -28,9 +28,15 @@ router.post("/", isLoggedIn, function(req, res){
               if (err) {
                   console.log(err);
               } else {
-                  story.comments.push(comment);
-                  story.save();
-                  res.redirect("/stories/" + req.params.id);
+                //   add username & id to comment
+                comment.author.id = req.user._id;
+                comment.author.username = req.user.username;
+                // save comment
+                comment.save();
+                story.comments.push(comment);
+                story.save();
+                console.log(comment);
+                res.redirect("/stories/" + req.params.id);
               }
            });
        }

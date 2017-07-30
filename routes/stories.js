@@ -115,7 +115,7 @@ function checkStoryOwnership(req, res, next) {
                 console.log(err);
                 res.redirect("back");
             } else {
-                // does user own the campground?
+                // does user own the story?
                 if (foundStory.author.id.equals(req.user._id)) {
                     next();
                 } else {

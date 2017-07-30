@@ -65,9 +65,9 @@ router.get("/:comment_id/edit", function(req, res){
 });
 
 
-// UPDATE STORY ROUTE
+// UPDATE COMMENT ROUTE
 router.put("/:comment_id", function(req, res){
-    // find and update correct story
+    // find and update correct comment
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
       if (err) {
           console.log(err);
@@ -79,7 +79,7 @@ router.put("/:comment_id", function(req, res){
     });
 });
 
-// DESTROY STORY ROUTE
+// DESTROY COMMENT ROUTE
 router.delete("/:comment_id", function(req, res){
   Comment.findByIdAndRemove(req.params.comment_id, function(err){
       if (err) {
@@ -105,7 +105,7 @@ function checkStoryOwnership(req, res, next) {
                 console.log(err);
                 res.redirect("back");
             } else {
-                // does user own the campground?
+                // does user own the comment?
                 if (foundComment.author.id.equals(req.user._id)) {
                     next();
                 } else {

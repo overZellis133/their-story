@@ -29,3 +29,7 @@ h1 {
 .thumbnail {
     padding: 0;
 }
+
+#delete-form {
+	display: inline;
+}

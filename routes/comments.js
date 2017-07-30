@@ -4,6 +4,8 @@ var Story = require("../models/story");
 var Comment = require("../models/comment");
 
 // COMMENTS NEW
+// the full route is /stories/:id/comments/new
+// express.Router({mergeParams: true}) passes parameters from stories down to comments
 router.get("/new", isLoggedIn, function(req, res){
     // find story by id
     Story.findById(req.params.id, function(err, story){

@@ -22,7 +22,9 @@
                             <div class="videoWrapper">
                                 <iframe src="https://youtube.com/embed/<%= story.youtubeID %>" allowfullscreen></iframe>
                             </div>
-                            <p>Created by <%= story.author.username %> on June 1, 2017</p>
+                            <p>
+                                <em>Submitted by <%= story.author.username %>, June 1, 2017</em>
+                            </p>
                         </div>
                         <div class="col-md-6">
                             <h4><%= story.description %></h4>

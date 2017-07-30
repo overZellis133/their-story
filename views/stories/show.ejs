@@ -22,7 +22,7 @@
                     <p><%= story.description %></p>
                     <% if (currentUser && story.author.id.equals(currentUser._id)) { %>
                         <a class="btn btn-warning" href="/stories/<%= story._id %>/edit">Edit</a>
-                        <form id="delete-form" action="/stories/<%= story._id %>?_method=DELETE" method="POST">
+                        <form class="delete-form" action="/stories/<%= story._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-danger">Delete</button>
                         </form>
                     <% } %>
@@ -46,7 +46,7 @@
                                 href="/stories/<%= story._id %>/comments/<%= comment._id %>/edit">
                                     Edit
                                 </a>
-                                <form id="delete-form" action="/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                <form class="delete-form" action="/stories/<%= story._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                                     <button class="btn btn-xs btn-danger">Delete</button>
                                 </form>
                             <% } %>

@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Story = require("../models/story");
+var middleware = require("../middleware");
 
 // INDEX ROUTE - show all stories
 router.get("/", function(req, res){
@@ -15,7 +16,7 @@ router.get("/", function(req, res){
 });
 
 // CREATE ROUTE - add new story
-router.post("/", isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
    var title = req.body.title;
    var youtubeID = req.body.youtubeID;
    var description = req.body.description;
@@ -42,7 +43,7 @@ router.post("/", isLoggedIn, function(req, res){
 
 
 // NEW ROUTE - show form to create new story
-router.get("/new", isLoggedIn, function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
    res.render("stories/new");
 });
 
@@ -63,7 +64,7 @@ router.get("/:id", function(req, res){
 });
 
 // EDIT STORY ROUTE
-router.get("/:id/edit", checkStoryOwnership, function(req, res){
+router.get("/:id/edit", middleware.checkStoryOwnership, function(req, res){
     Story.findById(req.params.id, function(err, foundStory){
        if (err) {
            console.log(err);
@@ -75,7 +76,7 @@ router.get("/:id/edit", checkStoryOwnership, function(req, res){
 
 
 // UPDATE STORY ROUTE
-router.put("/:id", checkStoryOwnership, function(req, res){
+router.put("/:id", middleware.checkStoryOwnership, function(req, res){
     // find and update correct story
     Story.findByIdAndUpdate(req.params.id, req.body.story, function(err, updatedStory){
        if (err) {
@@ -89,43 +90,15 @@ router.put("/:id", checkStoryOwnership, function(req, res){
 });
 
 // DESTROY STORY ROUTE
-router.delete("/:id", checkStoryOwnership, function(req, res){
+router.delete("/:id", middleware.checkStoryOwnership, function(req, res){
    Story.findByIdAndRemove(req.params.id, function(err){
        if (err) {
            res.redirect("/stories");
        } else {
+           req.flash("success", "Story deleted");
            res.redirect("/stories");
        }
    });
 });
-
-
-// middleware
-function isLoggedIn(req, res, next){
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-}
-
-function checkStoryOwnership(req, res, next) {
-    if (req.isAuthenticated()) {
-        Story.findById(req.params.id, function(err, foundStory){
-            if (err) {
-                console.log(err);
-                res.redirect("back");
-            } else {
-                // does user own the story?
-                if (foundStory.author.id.equals(req.user._id)) {
-                    next();
-                } else {
-                    res.redirect("back");
-                }
-            }
-        });
-    } else {
-        res.redirect("back");
-    }
-}
 
 module.exports = router;

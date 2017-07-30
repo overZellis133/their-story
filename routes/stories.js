@@ -36,6 +36,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
           console.log(err);
       } else {
           console.log(newlyCreated);
+          req.flash("success", "Added story");
           res.redirect("/stories");
       }
   });

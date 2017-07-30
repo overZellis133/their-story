@@ -40,7 +40,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
                 story.comments.push(comment);
                 story.save();
                 console.log(comment);
-                req.flash("success", "Successfully added comment");
+                req.flash("success", "Added comment");
                 res.redirect("/stories/" + req.params.id);
               }
            });

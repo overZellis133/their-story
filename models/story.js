@@ -4,6 +4,11 @@ var storySchema = new mongoose.Schema({
    title: String,
    youtubeID: String,
    description: String,
+   createdAt: 
+      {
+         type: Date,
+         default: Date.now
+      },
    comments: [
        {
            type: mongoose.Schema.Types.ObjectId,

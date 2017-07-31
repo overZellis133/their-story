@@ -23,6 +23,7 @@
                             <p>
                                 <em>Submitted by <%= story.author.username %>, <%= moment(story.createdAt).format("LL") %></em>
                             </p>
+                            <a class="btn btn-success" href="/stories/<%= story._id %>">More Info</a>
                         </div>
                         <div class="col-md-6">
                             <h4><%= story.description %></h4>

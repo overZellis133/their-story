@@ -6,7 +6,7 @@ var stories = [
     { 
         "title" : "Learning to Ski & A Night in Kentucky", 
         "youtubeID" : "IjFRdBfEj1I",
-        "description": "This is a description"
+        "description": 'Mom becomes the talk of a small Kentucky town after staying the night in a local "hotel", and Dad has an adventurous first day of skiing.'
     },
     { 
         "title" : "Story Session VI",
@@ -31,7 +31,7 @@ var stories = [
     { 
         "title" : "On Fear", 
         "youtubeID" : "uUlppt-q7XE",
-        "description": "This is a description"
+        "description": "Mom, Dad, and Zack discuss what some of their biggest fears have been in life, the sources of those, and how they handle them."
     },
     { 
         "title" : "On Education", 
@@ -41,7 +41,7 @@ var stories = [
     { 
         "title" : "Proudest Moments", 
         "youtubeID" : "MPBsgvMGE-Q",
-        "description": "This is a description"
+        "description": "Mom, Dad, and Zack discuss some of their proudest moments in life."
     },
     { 
         "title" : "What People Would Be Surprised to Know About Mom", 

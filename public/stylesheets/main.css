@@ -33,3 +33,7 @@ h1 {
 .delete-form {
 	display: inline;
 }
+
+.actions a {
+	display: inline-block;
+}

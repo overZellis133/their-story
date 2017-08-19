@@ -1,7 +1,26 @@
-var express = require("express");
-var router = express.Router();
-var User = require("../models/user");
-var passport = require("passport");
+var express  = require("express"),
+    User     = require("../models/user"),
+    passport = require("passport"),
+    OpenTok  = require("opentok"),
+    app      = express(),
+    router   = express.Router();
+    
+var apiKey = process.env.TOKBOX_API_KEY,
+    apiSecret = process.env.TOKBOX_SECRET;
+    
+if (!apiKey || !apiSecret) {
+  console.log('You must specify API_KEY and API_SECRET environment variables');
+  process.exit(1);
+}
+
+// Initialize OpenTok
+var opentok = new OpenTok(apiKey, apiSecret);
+
+// Create a session and store it in the express app
+opentok.createSession(function(err, session) {
+  if (err) throw err;
+  app.set('sessionId', session.sessionId);
+});
 
 // Landing Page / Root Route
 router.get("/", function(req, res){
@@ -64,6 +83,18 @@ router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "Logged out");
    res.redirect("/stories");
+});
+
+router.get("/host", function(req, res){
+    var sessionId = app.get('sessionId'),
+      // generate a fresh token for this client
+      token = opentok.generateToken(sessionId);
+
+  res.render('session', {
+      apiKey: apiKey, 
+      sessionId: sessionId, 
+      token: token
+  });
 });
 
 module.exports = router;

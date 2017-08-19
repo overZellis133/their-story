@@ -9,6 +9,7 @@ var methodOverride       = require("method-override"),
     Story                = require("./models/story"),
     Comment              = require("./models/comment"),
     User                 = require("./models/user"),
+    OpenTok              = require("opentok"),
     seedDB               = require("./seeds");
     
 // requiring routes
